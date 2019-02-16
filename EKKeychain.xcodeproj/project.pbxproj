@@ -15,7 +15,6 @@
 
 /* Begin PBXFileReference section */
 		978333182218139000D36996 /* EKKeychain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EKKeychain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9783331C2218139000D36996 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		978333232218164A00D36996 /* EKKeychain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKKeychain.h; sourceTree = "<group>"; };
 		978333242218164A00D36996 /* EKKeychain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EKKeychain.m; sourceTree = "<group>"; };
 		978333272218169300D36996 /* EKKeychainItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKKeychainItem.h; sourceTree = "<group>"; };
@@ -56,7 +55,6 @@
 				978333242218164A00D36996 /* EKKeychain.m */,
 				978333272218169300D36996 /* EKKeychainItem.h */,
 				978333282218169300D36996 /* EKKeychainItem.m */,
-				9783331C2218139000D36996 /* Info.plist */,
 			);
 			path = EKKeychain;
 			sourceTree = "<group>";
