@@ -1,0 +1,6 @@
+framework module EKKeychain {
+  umbrella header "EKKeychain.h"
+
+  export *
+  module * { export * }
+}

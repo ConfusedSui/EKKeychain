@@ -6,11 +6,26 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		9783332E221AC0CA00D36996 /* framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 9783332F221AC0CA00D36996 /* Build configuration list for PBXAggregateTarget "framework" */;
+			buildPhases = (
+				97833332221AC0CE00D36996 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = framework;
+			productName = framework;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		978333252218164A00D36996 /* EKKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 978333232218164A00D36996 /* EKKeychain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		978333262218164A00D36996 /* EKKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 978333242218164A00D36996 /* EKKeychain.m */; };
 		978333292218169300D36996 /* EKKeychainItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 978333272218169300D36996 /* EKKeychainItem.h */; };
 		9783332A2218169300D36996 /* EKKeychainItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 978333282218169300D36996 /* EKKeychainItem.m */; };
+		97833333221ADB7D00D36996 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9783332B2218618000D36996 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +34,7 @@
 		978333242218164A00D36996 /* EKKeychain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EKKeychain.m; sourceTree = "<group>"; };
 		978333272218169300D36996 /* EKKeychainItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKKeychainItem.h; sourceTree = "<group>"; };
 		978333282218169300D36996 /* EKKeychainItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EKKeychainItem.m; sourceTree = "<group>"; };
+		9783332B2218618000D36996 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +71,7 @@
 				978333242218164A00D36996 /* EKKeychain.m */,
 				978333272218169300D36996 /* EKKeychainItem.h */,
 				978333282218169300D36996 /* EKKeychainItem.m */,
+				9783332B2218618000D36996 /* Info.plist */,
 			);
 			path = EKKeychain;
 			sourceTree = "<group>";
@@ -104,6 +121,9 @@
 					978333172218139000D36996 = {
 						CreatedOnToolsVersion = 10.1;
 					};
+					9783332E221AC0CA00D36996 = {
+						CreatedOnToolsVersion = 10.1;
+					};
 				};
 			};
 			buildConfigurationList = 978333122218139000D36996 /* Build configuration list for PBXProject "EKKeychain" */;
@@ -119,6 +139,7 @@
 			projectRoot = "";
 			targets = (
 				978333172218139000D36996 /* EKKeychain */,
+				9783332E221AC0CA00D36996 /* framework */,
 			);
 		};
 /* End PBXProject section */
@@ -128,10 +149,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97833333221ADB7D00D36996 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		97833332221AC0CE00D36996 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Sets the target folders and the final framework product.\nFMK_NAME=${PROJECT_NAME}\n# Install dir will be the final output to the framework.\n# The following line create it in the root folder of the current project.\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n# Working dir will be deleted after the framework creation.\nWRK_DIR=build\nDEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n\n# Clean and Building both architectures.\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos clean build\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator build\n\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\nmkdir -p \"${INSTALL_DIR}\"\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/\"\n\nlipo -create \"${DEVICE_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/${FMK_NAME}\" -output \"${INSTALL_DIR}/${FMK_NAME}\"\nrm -r \"${WRK_DIR}\"\nopen \"${INSTALL_DIR}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		978333142218139000D36996 /* Sources */ = {
@@ -282,6 +324,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EKKeychain;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -307,10 +350,29 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.EKKeychain;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		97833330221AC0CA00D36996 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JKT3DQU6KR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		97833331221AC0CA00D36996 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = JKT3DQU6KR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -331,6 +393,15 @@
 			buildConfigurations = (
 				978333212218139000D36996 /* Debug */,
 				978333222218139000D36996 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9783332F221AC0CA00D36996 /* Build configuration list for PBXAggregateTarget "framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97833330221AC0CA00D36996 /* Debug */,
+				97833331221AC0CA00D36996 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
